@@ -5,6 +5,8 @@
 % user should understand the gist of the code and modify as needed. If the
 % data output does not look 'normal' ask yourself first, where in the code
 % could've the processing not worked?
+% Developed by Kevin Kimura 2019 while part of Prof. Tobias Hanrath's Lab
+% Cornell University
 
 %% Setting up the Analysis
 % 
@@ -99,8 +101,8 @@ for i = Leftend:Rightend
     end 
 
     %import the .ASC file (user must specify path)
-    GCFID = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant and Pulsed Long tests\190822_CuFoil168 -1650 -200 ps50ms\GC Data\190822 CuFoil168 -1650 -200 ps50ms 100mM KHCO3 FID',runstr,'.ASC']); %
-    GCTCD = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant and Pulsed Long tests\190822_CuFoil168 -1650 -200 ps50ms\GC Data\190822 CuFoil168 -1650 -200 ps50ms 100mM KHCO3 TCD',runstr,'.ASC']); %
+    GCFID = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant_PulsedLONG\190822_CuFoil168 -1650 -200 ps50ms\GC Data\190822 CuFoil168 -1650 -200 ps50ms 100mM KHCO3 FID',runstr,'.ASC']); %
+    GCTCD = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant_PulsedLONG\190822_CuFoil168 -1650 -200 ps50ms\GC Data\190822 CuFoil168 -1650 -200 ps50ms 100mM KHCO3 TCD',runstr,'.ASC']); %
 
     GCtime = 0.2/60:0.2/60:16; %last value is the total minutes, 5Hz intervals
     H2peak1 = 0.8067; %first H2 peak location
@@ -138,7 +140,7 @@ CompiledData = CompiledData/1000000;  %convert all ppm to x_i
 % if multiple NMR points were taken over a long test.
 % 
 
-NMR = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant and Pulsed Long tests\190822_CuFoil168 -1650 -200 ps50ms\CuFoil168NMRdata.xlsx']); %
+NMR = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant_PulsedLONG\190822_CuFoil168 -1650 -200 ps50ms\CuFoil168NMRdata.xlsx']); %
 NMR.time(:,1) = NMR.data(:,1)*60;
 
 % NMR.Acetate = 50*(500/400)*(NMR.data(:,4)/3)./(NMR.data(:,3)/6)*CatholyteVol/(1000000*1000);
@@ -206,7 +208,7 @@ CompiledData_ratio(:,1:Prodnum) =  CompiledData_i(:,1:Prodnum)./CompiledData_ito
 %% ECdata filtering for 1 ECdata set
 % comment out if processed in separate script
 
-ECdata = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant and Pulsed Long tests\190822_CuFoil168 -1650 -200 ps50ms\ECdataCuFoil168pt1.xlsx']);
+ECdata = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant_PulsedLONG\190822_CuFoil168 -1650 -200 ps50ms\ECdataCuFoil168pt1.xlsx']);
 save('ECdata.mat','ECdata');
 len = length(ECdata.data);
 %% Filtering Current
