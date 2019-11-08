@@ -5,8 +5,9 @@
 % user should understand the gist of the code and modify as needed. If the
 % data output does not look 'normal' ask yourself first, where in the code
 % could've the processing not worked?
-% Developed by Kevin Kimura 2019 while part of Prof. Tobias Hanrath's Lab
-% Cornell University
+%
+% Developed by Kevin Kimura (2019) while part of Prof. Tobias Hanrath's Lab
+% at Cornell University
 
 %% Setting up the Analysis
 % 
