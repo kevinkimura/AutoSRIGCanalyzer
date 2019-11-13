@@ -1,25 +1,25 @@
+%% This script will filter and average the current
 clear;clc;close all
-% ptnum = 7;
-% % EC = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant and Pulsed Long tests\190822_CuFoil168 -1650 -200 ps50ms\ECdataCuFoil168pt',num2str(ptnum),'.xlsx']);
-% EC = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant and Pulsed Long tests\190822_CuFoil168 -1650 -200 ps50ms\ECdataCuFoil168pt',num2str(ptnum),'.xlsx']);
-% len = length(EC.data);
-% figure
-% plot(EC.data(:,1),EC.data(:,2))
-% %%
-% filtered = zeros(round(len/20),2); %% rounds up, divides length by number of GC samples taken during part, makes a matrix of zeros with two columns
-% ct = 1; % initializing the counter
-% 
-% for i = 1:len
-%     % finding faradaic current
-%     if EC.data(i,2) < -0.5 && EC.data(i,2) > -1.5 %% taking current data that is negative but not huge negative charging spikes. this value will change based on case
-%         filtered(ct,:) = EC.data(i,:); % adding cathodic Faradaic current data to new matrix
-%         ct = ct +1;
-%     else
-%     end
-% end
-% figure
-% hold on
-% plot(filtered(:,1),filtered(:,2))
+
+EC = importdata(['C:\Users\Kevin\Documents\Graduate_Work_MAIN\Electrochemistry\Data\Cufoil Data\Constant_PulsedLONG\190818-19_CuFoil165 Const -1650mV\190818-19 CuFoil165 Long test EC data.xlsx']);
+len = length(EC.data);
+figure
+plot(EC.data(:,1),EC.data(:,2))
+%%
+filtered = zeros(round(len/20),2); %% rounds up, divides length by number of GC samples taken during part, makes a matrix of zeros with two columns
+ct = 1; % initializing the counter
+
+for i = 1:len
+    % finding faradaic current
+    if EC.data(i,2) < -0.5 && EC.data(i,2) > -1.5 %% taking current data that is negative but not huge negative charging spikes. this value will change based on case
+        filtered(ct,:) = EC.data(i,:); % adding cathodic Faradaic current data to new matrix
+        ct = ct +1;
+    else
+    end
+end
+figure
+hold on
+plot(filtered(:,1),filtered(:,2))
 % load('CuFoil168filtered_ECdata.mat')
 % 
 % [val,idx] = min(abs(filtered(:,1)-ECdata168(ptnum-1).data(end,1))); %finding the end point from previous set
@@ -34,29 +34,29 @@ clear;clc;close all
 
 %% Finding Average Faradaic Current from Previously Filtered Data
 
-load('CuFoil168filtered_ECdata.mat')
+% load('CuFoil168filtered_ECdata.mat')
 % filteredpt8 = filteredpt8(any(filteredpt8,2),:); %removes zeros
-ECdata = [];
-for a = 1:3
-    ECdata = [ECdata; ECdata168(a).data];
-end
-
-for a = 4:7
-    ECdata168(a).data(:,1) = ECdata168(a).data(:,1) - ECdata168(a).data(1,1); %start all at zero time
-    ECdata = [ECdata(:,1) ECdata(:,2); ECdata168(a).data(:,1)+ECdata(end,1) ECdata168(a).data(:,2)];
-end
-data = ECdata;
-save('CuFoil168TotalECdata.mat','data')
+% ECdata = [];
+% for a = 1:3
+%     ECdata = [ECdata; ECdata168(a).data];
+% end
+% 
+% for a = 4:7
+%     ECdata168(a).data(:,1) = ECdata168(a).data(:,1) - ECdata168(a).data(1,1); %start all at zero time
+%     ECdata = [ECdata(:,1) ECdata(:,2); ECdata168(a).data(:,1)+ECdata(end,1) ECdata168(a).data(:,2)];
+% end
+ECdata = EC.data;
+% save('CuFoil168TotalECdata.mat','data')
 figure
 plot(ECdata(:,1), ECdata(:,2))
 % AllECdata(:,1) = ECtime;
 AllECdata = ECdata;
-Area183 = 0.121;
+Area165 = 0.088;
 AllECdata(:,1) = AllECdata(:,1) - AllECdata(1,1);  % scaling the time to start at 0
 AllECdata(:,1) = AllECdata(:,1)/60; %converting to minutes
-AllECdata(:,2) = AllECdata(:,2)/(2*Area183); %half the current (equal pulse), density (mA/cm^2)
+AllECdata(:,2) = AllECdata(:,2)/(2*Area165); %half the current (equal pulse), density (mA/cm^2)
 GC1strun_starttime = 10; %minutes
-GCrunrest_time = 24; %min
+GCrunrest_time = 26; %min
 
 GCsections = floor((AllECdata(end,1)-GC1strun_starttime)/GCrunrest_time)+1;
 LeftoverTime = round(AllECdata(end,1)) - GC1strun_starttime - (GCsections-1)*GCrunrest_time;
